@@ -1,0 +1,151 @@
+<div class="settings-container">
+    <div class="page-header">
+        <button class="btn btn-secondary" (click)="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            {{ 'BACK' | translate }}
+        </button>
+        <h2>{{ 'SETTINGS' | translate }}</h2>
+        <div></div>
+    </div>
+
+    <div class="settings-grid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'LANGUAGE' | translate }}</h3>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">{{ 'SELECT_LANGUAGE' | translate }}</label>
+                    <select class="form-control" [(ngModel)]="currentLang" (change)="changeLanguage()" name="language">
+                        <option value="en">{{ 'ENGLISH' | translate }}</option>
+                        <option value="gu">{{ 'GUJARATI' | translate }}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'SHOP_INFO' | translate }}</h3>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">{{ 'SHOP_NAME' | translate }} *</label>
+                    <input type="text" class="form-control" [(ngModel)]="settings.shopName" name="shopName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'ADDRESS' | translate }}</label>
+                    <textarea class="form-control" [(ngModel)]="settings.address" name="address" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'GST_NUMBER' | translate }}</label>
+                    <input type="text" class="form-control" [(ngModel)]="settings.gstNumber" name="gstNumber">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'UPLOAD_LOGO' | translate }}</label>
+                    <div class="logo-upload">
+                        <div class="logo-preview" *ngIf="settings.logo">
+                            <img [src]="settings.logo" alt="Shop Logo">
+                        </div>
+                        <button type="button" class="btn btn-secondary" (click)="uploadLogo()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                            {{ 'CHOOSE_FILE' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'BILLING_DEFAULTS' | translate }}</h3>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">{{ 'TAX_PERCENTAGE' | translate }} (%)</label>
+                    <input type="number" class="form-control" [(ngModel)]="settings.taxPercentage" name="taxPercentage"
+                        min="0" max="100" step="0.01">
+                    <small class="form-text">Applied to all invoices</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'DEFAULT_DISCOUNT' | translate }} (₹)</label>
+                    <input type="number" class="form-control" [(ngModel)]="settings.defaultDiscount"
+                        name="defaultDiscount" min="0" step="0.01">
+                    <small class="form-text">Default discount amount for new invoices</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'INVOICE_START_NO' | translate }}</label>
+                    <input type="number" class="form-control" [(ngModel)]="settings.invoiceStartNumber"
+                        name="invoiceStartNumber" min="1">
+                    <small class="form-text">Starting invoice number for new shops</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'CURRENT_INVOICE_NO' | translate }}</label>
+                    <input type="number" class="form-control" [value]="settings.currentInvoiceNumber" disabled>
+                    <small class="form-text">Next invoice will use this number</small>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'DATA_MANAGEMENT' | translate }}</h3>
+            </div>
+            <div class="data-actions">
+                <div class="action-item">
+                    <div class="action-info">
+                        <h4>{{ 'BACKUP_DATA' | translate }}</h4>
+                        <p>{{ 'BACKUP_DESC' | translate }}</p>
+                    </div>
+                    <button class="btn btn-primary" (click)="backup()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                        </svg>
+                        {{ 'BACKUP_DATA' | translate }}
+                    </button>
+                </div>
+
+                <div class="action-item warning-action">
+                    <div class="action-info">
+                        <h4>{{ 'RESTORE_DATA' | translate }}</h4>
+                        <p>{{ 'RESTORE_DESC' | translate }}</p>
+                    </div>
+                    <button class="btn btn-danger" (click)="restore()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        {{ 'RESTORE_DATA' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-section">
+        <button class="btn btn-success btn-lg" (click)="saveSettings()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 24px; height: 24px;">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{ 'SAVE_SETTINGS' | translate }}
+        </button>
+    </div>
+</div>

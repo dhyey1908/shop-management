@@ -1,0 +1,88 @@
+<div class="products-container">
+    <div class="page-header">
+        <button class="btn btn-secondary" (click)="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            {{ 'BACK' | translate }}
+        </button>
+        <h2>{{ 'PRODUCTS_TITLE' | translate }}</h2>
+        <button class="btn btn-primary" (click)="addNew()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            {{ 'ADD_PRODUCT' | translate }}
+        </button>
+    </div>
+
+    <div class="card" *ngIf="showForm">
+        <h3>{{ editMode ? ('EDIT_PRODUCT' | translate) : ('ADD_PRODUCT' | translate) }}</h3>
+        <form (ngSubmit)="saveProduct()">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">{{ 'PRODUCT_NAME' | translate }} *</label>
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'PRICE' | translate }} *</label>
+                    <input type="number" class="form-control" [(ngModel)]="currentProduct.price" name="price" min="0"
+                        step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ 'CATEGORY' | translate }}</label>
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.category" name="category">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+                <button type="submit" class="btn btn-success">{{ editMode ? ('UPDATE' | translate) : ('SAVE' |
+                    translate) }}</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="table-container" *ngIf="products.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'PRODUCT_NAME' | translate }}</th>
+                        <th>{{ 'PRICE' | translate }}</th>
+                        <th>{{ 'CATEGORY' | translate }}</th>
+                        <th>{{ 'ACTIONS' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td><strong>{{ product.name }}</strong></td>
+                        <td>{{ formatCurrency(product.price) }}</td>
+                        <td>{{ product.category ||'-' }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-secondary" (click)="editProduct(product)">{{ 'EDIT' |
+                                    translate }}</button>
+                                <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">{{ 'DELETE' |
+                                    translate }}</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="products.length === 0" class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            <p>{{ 'NO_PRODUCTS' | translate }}</p>
+            <button class="btn btn-primary" (click)="addNew()">{{ 'ADD_FIRST_PRODUCT' | translate }}</button>
+        </div>
+    </div>
+</div>

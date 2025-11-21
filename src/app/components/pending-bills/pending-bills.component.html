@@ -1,0 +1,52 @@
+<div class="pending-bills-container">
+    <div class="page-header">
+        <button class="btn btn-secondary" (click)="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 20px; height: 20px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            {{ 'BACK' | translate }}
+        </button>
+        <h2>{{ 'PENDING_BILLS_TITLE' | translate }}</h2>
+        <div style="width: 80px"></div>
+    </div>
+
+    <div class="card">
+        <div class="table-container" *ngIf="pendingInvoices.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'INVOICE_NO' | translate }}</th>
+                        <th>{{ 'CUSTOMER' | translate }}</th>
+                        <th>{{ 'DATE' | translate }}</th>
+                        <th>{{ 'ITEMS' | translate }}</th>
+                        <th>{{ 'AMOUNT' | translate }}</th>
+                        <th>{{ 'ACTIONS' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let invoice of pendingInvoices">
+                        <td><strong>#{{ invoice.invoiceNumber }}</strong></td>
+                        <td>{{ invoice.customerName }}</td>
+                        <td>{{ formatDate(invoice.date) }}</td>
+                        <td>{{ invoice.items.length }}</td>
+                        <td><strong>{{ formatCurrency(invoice.grandTotal) }}</strong></td>
+                        <td>
+                            <button class="btn btn-sm btn-success" (click)="markAsPaid(invoice)">{{ 'MARK_PAID' |
+                                translate }}</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="pendingInvoices.length === 0" class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p>{{ 'NO_PENDING_BILLS' | translate }}</p>
+        </div>
+    </div>
+</div>
