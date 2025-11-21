@@ -126,7 +126,8 @@
         <!-- Actions -->
         <div class="actions-bar">
             <button class="btn btn-primary" (click)="saveInvoice()"> {{ 'SAVE_INVOICE' | translate }}</button>
-            <button class="btn btn-secondary" (click)="printInvoice()" (click)="saveInvoice()"> {{ 'PRINT' | translate }}</button>
+            <button class="btn btn-secondary" (click)="printInvoice()" (click)="saveInvoice()"> {{ 'PRINT' | translate
+                }}</button>
             <button class="btn btn-outline" (click)="clearForm()"> {{ 'CLEAR' | translate }}</button>
         </div>
     </div>
@@ -134,75 +135,90 @@
 
 <!-- Print Receipt Template -->
 <div class="print-template print-only">
-    <div class="print-header">
-        <h1>{{ shopName || 'Shop Name' }}</h1>
-        <p class="address" *ngIf="shopAddress">{{ shopAddress }}</p>
-        <p class="contact">
-            <span *ngIf="shopPhone">Ph: {{ shopPhone }}</span>
-            <span *ngIf="shopPhone && shopEmail"> | </span>
-            <span *ngIf="shopEmail">{{ shopEmail }}</span>
-        </p>
-        <p *ngIf="shopGST" class="gst">GSTIN: {{ shopGST }}</p>
-    </div>
-
-    <div class="invoice-details">
-        <div class="customer-details">
-            <label>{{ 'BILL_TO' | translate }}:</label>
-            <div class="name">{{ customerName || 'Walk-in Customer' }}</div>
-            <div *ngIf="customerPhone">{{ customerPhone }}</div>
-            <div *ngIf="customerAddress">{{ customerAddress }}</div>
+    <div class="print-invoice" id="printInvoice">
+        <!-- Header with Shop Name and Mobile -->
+        <div class="print-header-box">
+            <div class="shop-title">{{ shopName || 'SHOP NAME HERE' }}</div>
+            <div class="shop-mobile" *ngIf="shopPhone">{{ shopPhone }}</div>
         </div>
-        <div class="invoice-meta">
-            <div class="row">
-                <label>{{ 'INVOICE_NO' | translate }}:</label>
-                <span>{{ invoiceNumber }}</span>
+
+        <!-- Customer and Date Row -->
+        <div class="customer-date-row">
+            <div class="customer-info">
+                <span class="label">{{ 'CUSTOMER_NAME' | translate }}:</span>
+                <span class="value">{{ customerName || 'Walk-in Customer' }}</span>
             </div>
-            <div class="row">
-                <label>{{ 'DATE' | translate }}:</label>
-                <span>{{ formatDate(date) }}</span>
+            <div class="date-info">
+                <span class="label">{{ 'DATE' | translate }}:</span>
+                <span class="value">{{ formatDate(date) }}</span>
             </div>
         </div>
-    </div>
 
-    <table class="print-table">
-        <thead>
-            <tr>
-                <th style="width: 45%">{{ 'ITEM_NAME' | translate }}</th>
-                <th style="width: 15%" class="text-center">{{ 'QUANTITY' | translate }}</th>
-                <th style="width: 20%" class="text-right">{{ 'PRICE' | translate }}</th>
-                <th style="width: 20%" class="text-right">{{ 'TOTAL' | translate }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-container *ngFor="let item of items">
-                <tr *ngIf="item.productName">
-                    <td>{{ item.productName }}</td>
-                    <td class="text-center">{{ item.quantity }}</td>
-                    <td class="text-right">{{ item.price }}</td>
-                    <td class="text-right">{{ formatCurrency(item.total) }}</td>
+        <!-- Items Table with Borders -->
+        <table class="print-table-bordered">
+            <thead>
+                <tr>
+                    <th class="col-sr">{{ 'SR_NO' | translate }}</th>
+                    <th class="col-item">{{ 'ITEM_NAME' | translate }}</th>
+                    <th class="col-qty">{{ 'QUANTITY' | translate }}</th>
+                    <th class="col-price">{{ 'PRICE' | translate }}</th>
+                    <th class="col-total">{{ 'TOTAL' | translate }}</th>
                 </tr>
-            </ng-container>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of items; let i = index">
+                    <tr *ngIf="item.productName">
+                        <td class="col-sr">{{ i + 1 }}</td>
+                        <td class="col-item">{{ item.productName }}</td>
+                        <td class="col-qty">{{ item.quantity }}</td>
+                        <td class="col-price">{{ item.price }}</td>
+                        <td class="col-total">{{ formatCurrency(item.total) }}</td>
+                    </tr>
+                </ng-container>
+                <!-- Empty rows to maintain structure (minimum 5 rows) -->
+                <ng-container *ngFor="let emptyRow of getEmptyRows()">
+                    <tr class="empty-row">
+                        <td class="col-sr">&nbsp;</td>
+                        <td class="col-item">&nbsp;</td>
+                        <td class="col-qty">&nbsp;</td>
+                        <td class="col-price">&nbsp;</td>
+                        <td class="col-total">&nbsp;</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
 
-    <div class="print-footer">
-        <div class="totals-box">
+        <!-- Totals Section -->
+        <div class="totals-section">
             <div class="total-row">
-                <label>{{ 'SUBTOTAL' | translate }}:</label>
-                <span>{{ formatCurrency(subtotal) }}</span>
+                <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
+                <span class="total-value">{{ getTotalItemCount() }}</span>
+            </div>
+            <div class="total-row">
+                <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
+                <span class="total-value">{{ formatCurrency(subtotal) }}</span>
             </div>
             <div class="total-row" *ngIf="discountAmount > 0">
-                <label>{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}%):</label>
-                <span>-{{ formatCurrency(discountAmount) }}</span>
+                <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}% / ₹):</span>
+                <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
             </div>
-            <div class="total-row grand-total">
-                <label>{{ 'GRAND_TOTAL' | translate }}:</label>
-                <span>{{ formatCurrency(grandTotal) }}</span>
+            <div class="total-row">
+                <span class="total-label">{{ 'TAX_GST' | translate }}:</span>
+                <span class="total-value">₹ 0.00</span>
             </div>
         </div>
-    </div>
 
-    <div class="print-message">
-        <p>{{ 'THANK_YOU' | translate }}</p>
+        <!-- Grand Total -->
+        <div class="grand-total-section">
+            <div class="grand-total-row">
+                <span class="grand-total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
+                <span class="grand-total-value">{{ formatCurrency(grandTotal) }}</span>
+            </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div class="thank-you-section">
+            <p>{{ 'VISIT_AGAIN' | translate }}</p>
+        </div>
     </div>
 </div>

@@ -256,4 +256,17 @@ export class BillingComponent implements OnInit {
         const year = d.getFullYear();
         return `${day}/${month}/${year}`;
     }
+
+    getTotalItemCount(): number {
+        return this.items
+            .filter(item => item.productName)
+            .reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    getEmptyRows(): number[] {
+        const filledRows = this.getTotalItemCount();
+        const minRows = 5;
+        const emptyRowsCount = Math.max(0, minRows - filledRows);
+        return Array(emptyRowsCount).fill(0);
+    }
 }

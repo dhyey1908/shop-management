@@ -201,7 +201,7 @@
     }
 
     @page {
-        margin: 1cm;
+        margin: 0.5cm;
         size: auto;
     }
 
@@ -212,134 +212,191 @@
     }
 
     .print-template {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', 'Arial', sans-serif;
         color: #000;
         width: 100%;
         max-width: 100%;
+        padding: 10px;
     }
 
-    .print-header {
+    .print-invoice {
+        border: 2px solid #000;
+        padding: 0;
+    }
+
+    /* Header Box with Shop Name and Mobile */
+    .print-header-box {
+        border-bottom: 2px solid #000;
+        padding: 12px;
         text-align: center;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #000;
+        background: #fff;
     }
 
-    .print-header h1 {
-        font-size: 1.8rem;
-        margin: 0 0 0.5rem 0;
+    .shop-title {
+        font-size: 1.4rem;
         font-weight: 800;
         text-transform: uppercase;
+        margin-bottom: 4px;
+        letter-spacing: 1px;
     }
 
-    .print-header p {
-        margin: 0.2rem 0;
-        font-size: 0.9rem;
-        color: #333;
+    .shop-mobile {
+        font-size: 1rem;
+        font-weight: 600;
     }
 
-    .invoice-details {
+    /* Customer and Date Row */
+    .customer-date-row {
+        border-bottom: 2px solid #000;
+        padding: 10px 12px;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        align-items: center;
     }
 
-    .customer-details {
-        flex: 1;
+    .customer-info,
+    .date-info {
+        font-size: 0.95rem;
     }
 
-    .invoice-meta {
-        text-align: right;
-    }
-
-    .customer-details label,
-    .invoice-meta label {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        color: #666;
+    .customer-info .label,
+    .date-info .label {
         font-weight: 600;
-        display: block;
-        margin-bottom: 0.2rem;
+        margin-right: 8px;
     }
 
-    .customer-details .name {
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 0.2rem;
+    .customer-info .value,
+    .date-info .value {
+        font-weight: 400;
     }
 
-    .invoice-meta .row {
-        margin-bottom: 0.2rem;
-    }
-
-    .invoice-meta span {
-        font-weight: 600;
-        margin-left: 0.5rem;
-    }
-
-    .print-table {
+    /* Bordered Table */
+    .print-table-bordered {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 2rem;
+        margin: 0;
     }
 
-    .print-table th {
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
-        padding: 0.5rem;
+    .print-table-bordered th,
+    .print-table-bordered td {
+        border: 1px solid #000;
+        padding: 8px;
         text-align: left;
+    }
+
+    .print-table-bordered thead th {
+        background: #fff;
         font-weight: 700;
         font-size: 0.9rem;
         text-transform: uppercase;
-    }
-
-    .print-table td {
-        padding: 0.75rem 0.5rem;
-        border-bottom: 1px solid #eee;
-        font-size: 0.95rem;
-    }
-
-    .print-table .text-center {
         text-align: center;
     }
 
-    .print-table .text-right {
-        text-align: right;
-    }
-
-    .print-footer {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 1rem;
-    }
-
-    .totals-box {
-        width: 300px;
-    }
-
-    .totals-box .total-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    .totals-box .grand-total {
-        border-top: 2px solid #000;
-        padding-top: 0.5rem;
-        margin-top: 0.5rem;
-        font-weight: 800;
-        font-size: 1.2rem;
-    }
-
-    .print-message {
-        text-align: center;
-        margin-top: 3rem;
-        font-style: italic;
-        color: #666;
+    .print-table-bordered tbody td {
         font-size: 0.9rem;
     }
+
+    /* Column Widths */
+    .col-sr {
+        width: 8%;
+        text-align: center !important;
+    }
+
+    .col-item {
+        width: 42%;
+        text-align: left !important;
+    }
+
+    .col-qty {
+        width: 12%;
+        text-align: center !important;
+    }
+
+    .col-price {
+        width: 18%;
+        text-align: right !important;
+    }
+
+    .col-total {
+        width: 20%;
+        text-align: right !important;
+    }
+
+    /* Empty Rows */
+    .empty-row td {
+        height: 30px;
+        color: transparent;
+    }
+
+    /* Totals Section */
+    .totals-section {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 10px 12px;
+    }
+
+    .totals-section .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
+
+    .totals-section .total-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .total-label {
+        font-weight: 600;
+    }
+
+    .total-value {
+        font-weight: 400;
+        text-align: right;
+        min-width: 120px;
+    }
+
+    /* Grand Total Section */
+    .grand-total-section {
+        border-bottom: 2px solid #000;
+        padding: 12px;
+        background: #f9f9f9;
+    }
+
+    .grand-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .grand-total-label {
+        font-weight: 800;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+    }
+
+    .grand-total-value {
+        font-weight: 800;
+        font-size: 1.2rem;
+        text-align: right;
+        min-width: 120px;
+    }
+
+    /* Thank You Section */
+    .thank-you-section {
+        padding: 12px;
+        text-align: center;
+        border-bottom: none;
+    }
+
+    .thank-you-section p {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 500;
+        font-style: italic;
+    }
 }
+
 
 @media (max-width: 768px) {
     .invoice-header-row {

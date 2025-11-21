@@ -148,7 +148,13 @@ export const translations: any = {
         'FONT_SMALL': 'Small',
         'FONT_MEDIUM': 'Medium',
         'FONT_LARGE': 'Large',
-        'FONT_EXTRA_LARGE': 'Extra Large'
+        'FONT_EXTRA_LARGE': 'Extra Large',
+
+        // Invoice Format
+        'SR_NO': 'Sr',
+        'TOTAL_ITEMS': 'Total Items',
+        'TAX_GST': 'Tax (GST)',
+        'VISIT_AGAIN': 'Thank you for shopping! Visit again.'
     },
     gu: {
         'DASHBOARD': 'ડેશબોર્ડ',
@@ -299,6 +305,12 @@ export const translations: any = {
         'FONT_SMALL': 'નાનું',
         'FONT_MEDIUM': 'મધ્યમ',
         'FONT_LARGE': 'મોટું',
-        'FONT_EXTRA_LARGE': 'ખૂબ મોટું'
+        'FONT_EXTRA_LARGE': 'ખૂબ મોટું',
+
+        // Invoice Format
+        'SR_NO': 'ક્રમ',
+        'TOTAL_ITEMS': 'કુલ વસ્તુઓ',
+        'TAX_GST': 'કર (GST)',
+        'VISIT_AGAIN': 'ખરીદી કરવા બદલ આભાર! ફરી આવજો.'
     }
 };
