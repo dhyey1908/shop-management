@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     };
 
     shopName = 'My Shop';
+    logo = 'logo.png';
     currentFontSize: FontSize = 'medium';
 
     constructor(
@@ -34,10 +35,11 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.loadData();
 
-        // Subscribe to settings for shop name
+        // Subscribe to settings for shop name and logo
         this.dataService.settings$.subscribe(settings => {
             if (settings) {
                 this.shopName = settings.shopName;
+                this.logo = settings.logo || 'logo.png';
             }
         });
 

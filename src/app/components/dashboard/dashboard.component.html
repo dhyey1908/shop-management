@@ -1,8 +1,11 @@
 <div class="dashboard-container">
   <header class="dashboard-header">
     <div class="header-content">
-      <h1>{{ shopName }}</h1>
-      <p class="text-muted">{{ 'WELCOME_BACK' | translate }}</p>
+      <img [src]="logo" alt="Logo" class="dashboard-logo" *ngIf="logo">
+      <div>
+        <h1>{{ shopName }}</h1>
+        <p class="text-muted">{{ 'WELCOME_BACK' | translate }}</p>
+      </div>
     </div>
     <div class="font-size-controls">
       <span class="font-size-label">{{ 'FONT_SIZE' | translate }}:</span>
