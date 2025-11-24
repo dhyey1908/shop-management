@@ -24,9 +24,9 @@
 
                 </div>
             </div>
-            <div>
+            <div class="form-group">
                 <button class="btn btn-primary btn-icon" (click)="goToAddCustomer()" title="Add New Customer">
-                    +
+                    {{ 'ADD_CUSTOMER' | translate }}
                 </button>
             </div>
             <div class="form-group date-group">
@@ -125,7 +125,8 @@
 
         <!-- Actions -->
         <div class="actions-bar">
-            <button class="btn btn-primary" (click)="saveInvoice()"> {{ 'SAVE_INVOICE' | translate }}</button>
+            <button class="btn btn-primary" (click)="saveInvoice()"> {{ (isEditMode ? 'UPDATE_INVOICE' : 'SAVE_INVOICE')
+                | translate }}</button>
             <button class="btn btn-secondary" (click)="printInvoice()" (click)="saveInvoice()"> {{ 'PRINT' | translate
                 }}</button>
             <button class="btn btn-outline" (click)="clearForm()"> {{ 'CLEAR' | translate }}</button>
@@ -188,31 +189,25 @@
             </tbody>
         </table>
 
-        <!-- Totals Section -->
-        <div class="totals-section">
-            <div class="total-row">
-                <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
-                <span class="total-value">{{ getTotalItemCount() }}</span>
-            </div>
-            <div class="total-row">
-                <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
-                <span class="total-value">{{ formatCurrency(subtotal) }}</span>
-            </div>
-            <div class="total-row" *ngIf="discountAmount > 0">
-                <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}% / ₹):</span>
-                <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
-            </div>
-            <div class="total-row">
-                <span class="total-label">{{ 'TAX_GST' | translate }}:</span>
-                <span class="total-value">₹ 0.00</span>
-            </div>
-        </div>
-
-        <!-- Grand Total -->
-        <div class="grand-total-section">
-            <div class="grand-total-row">
-                <span class="grand-total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
-                <span class="grand-total-value">{{ formatCurrency(grandTotal) }}</span>
+        <!-- Compact Totals Row -->
+        <div class="compact-totals-section">
+            <div class="compact-totals-row">
+                <div class="total-column">
+                    <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
+                    <span class="total-value">{{ getTotalItemCount() }}</span>
+                </div>
+                <div class="total-column">
+                    <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
+                    <span class="total-value">{{ formatCurrency(subtotal) }}</span>
+                </div>
+                <div class="total-column" *ngIf="discountAmount > 0">
+                    <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}%):</span>
+                    <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
+                </div>
+                <div class="total-column grand-total-column">
+                    <span class="total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
+                    <span class="total-value">{{ formatCurrency(grandTotal) }}</span>
+                </div>
             </div>
         </div>
 

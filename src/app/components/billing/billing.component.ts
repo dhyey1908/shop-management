@@ -38,6 +38,8 @@ export class BillingComponent implements OnInit {
     discountAmount = 0;
     grandTotal = 0;
     paymentStatus: 'Paid' | 'Pending' = 'Paid';
+    isEditMode = false;
+    returnUrl = '/dashboard'; // Default return URL
 
     shopName = '';
     shopAddress = '';
@@ -84,8 +86,56 @@ export class BillingComponent implements OnInit {
             }
         });
 
-        // Start with one empty row
-        this.addNewItemRow();
+        // Check if we're editing an existing invoice
+        const navigation = this.router.getCurrentNavigation();
+        const editInvoice = navigation?.extras?.state?.['editInvoice'] || history.state?.editInvoice;
+        const returnUrl = navigation?.extras?.state?.['returnUrl'] || history.state?.returnUrl;
+
+        if (returnUrl) {
+            this.returnUrl = returnUrl;
+        }
+
+        if (editInvoice) {
+            // Load invoice data for editing
+            this.loadInvoiceForEdit(editInvoice);
+        } else {
+            // Start with one empty row for new invoice
+            this.addNewItemRow();
+        }
+    }
+
+    loadInvoiceForEdit(invoice: any) {
+        // Enable edit mode
+        this.isEditMode = true;
+
+        // Set invoice number and date
+        this.invoiceNumber = invoice.invoiceNumber;
+        this.date = invoice.date;
+
+        // Set customer information
+        this.selectedCustomerId = invoice.customerId || '';
+        this.customerName = invoice.customerName || '';
+        this.customerPhone = invoice.customerPhone || '';
+        this.customerAddress = invoice.customerAddress || '';
+        this.customerGST = invoice.customerGST || '';
+
+        // Set items
+        this.items = invoice.items.map((item: any) => ({
+            productId: item.productId || '',
+            productName: item.productName || '',
+            quantity: item.quantity || 1,
+            price: item.price || 0,
+            total: item.total || 0
+        }));
+
+        // Set discount
+        this.discountPercentage = invoice.discountValue || 0;
+
+        // Set payment status
+        this.paymentStatus = invoice.status || 'Paid';
+
+        // Calculate totals
+        this.calculateTotals();
     }
 
     onCustomerSelect(customerId: string) {
@@ -201,9 +251,16 @@ export class BillingComponent implements OnInit {
 
         try {
             await this.dataService.saveInvoice(invoice);
-            alert(this.translationService.translate('SUCCESS_INVOICE_SAVED'));
-            this.clearForm();
-            this.router.navigate(['/dashboard']);
+            const successMessage = this.isEditMode ? 'SUCCESS_INVOICE_UPDATED' : 'SUCCESS_INVOICE_SAVED';
+            alert(this.translationService.translate(successMessage));
+
+            if (this.isEditMode) {
+                // Navigate back to the page where user came from
+                this.router.navigate([this.returnUrl]);
+            } else {
+                this.clearForm();
+                this.router.navigate(['/dashboard']);
+            }
         } catch (error) {
             alert(this.translationService.translate('ERROR_SAVING_INVOICE'));
             console.error(error);

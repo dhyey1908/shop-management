@@ -54,13 +54,12 @@
                             </span>
                         </td>
                         <td class="no-print">
-                            <button class="btn btn-sm btn-primary" (click)="viewInvoice(invoice)">{{ 'VIEW' | translate
-                                }}</button>
-                            <button class="btn btn-sm btn-secondary" (click)="printInvoiceItem(invoice)"
-                                style="margin-left: 0.5rem;">{{ 'PRINT' | translate }}</button>
-                            <button *ngIf="invoice.status === 'Pending'" class="btn btn-sm btn-success"
-                                (click)="markAsPaid(invoice)" style="margin-left: 0.5rem;">{{ 'MARK_PAID' | translate
-                                }}</button>
+                            <button class="btn btn-sm btn-success" (click)="editInvoice(invoice)"
+                                style="margin-right: 0.5rem;">{{ 'EDIT' | translate }}</button>
+                            <button class="btn btn-sm btn-primary" (click)="viewInvoice(invoice)"
+                                style="margin-right: 0.5rem;">{{ 'VIEW' | translate }}</button>
+                            <button class="btn btn-sm btn-secondary" (click)="printInvoiceItem(invoice)">{{ 'PRINT' |
+                                translate }}</button>
                         </td>
                     </tr>
                 </tbody>
@@ -142,10 +141,9 @@
                 </div>
             </div>
 
+
             <div class="modal-actions no-print">
                 <button class="btn btn-secondary" (click)="closeModal()">{{ 'CLOSE' | translate }}</button>
-                <button *ngIf="selectedInvoice.status === 'Pending'" class="btn btn-success"
-                    (click)="markAsPaid(selectedInvoice)">{{ 'MARK_PAID' | translate }}</button>
                 <button class="btn btn-primary" (click)="printInvoice()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" style="width: 20px; height: 20px;">
@@ -157,4 +155,3 @@
             </div>
         </div>
     </div>
-</div>

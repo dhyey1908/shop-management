@@ -94,6 +94,10 @@
     background: linear-gradient(135deg, #f59e0b, #fbbf24);
 }
 
+.action-icon.invoice-history {
+    background: linear-gradient(135deg, #06b6d4, #22d3ee);
+}
+
 .action-text h3 {
     font-size: 1.125rem;
     font-weight: 600;

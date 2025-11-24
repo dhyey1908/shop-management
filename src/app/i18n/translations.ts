@@ -78,6 +78,7 @@ export const translations: any = {
         'SELECT_PRODUCT': 'Select Product',
         'ADD_ITEM': 'Add Item',
         'SAVE_INVOICE': 'Save Invoice',
+        'UPDATE_INVOICE': 'Update Invoice',
         'BILL_TO': 'Bill To',
         'INVOICE_DETAILS': 'Invoice Details',
         'THANK_YOU': 'Thank you for your business!',
@@ -101,6 +102,7 @@ export const translations: any = {
 
         // Invoice History
         'INVOICE_HISTORY_TITLE': 'Invoice History',
+        'VIEW_ALL_INVOICES': 'View all invoices',
         'NO_INVOICES': 'No invoices yet',
         'NO_INVOICES_SEARCH': 'No invoices found matching your search',
         'INVOICE_DETAILS_TITLE': 'Invoice Details',
@@ -122,6 +124,7 @@ export const translations: any = {
         'ERROR_CUSTOMER_NAME': 'Please enter customer name',
         'ERROR_ADD_ITEM': 'Please add at least one valid item',
         'SUCCESS_INVOICE_SAVED': 'Invoice saved successfully!',
+        'SUCCESS_INVOICE_UPDATED': 'Invoice updated successfully!',
         'ERROR_SAVING_INVOICE': 'Error saving invoice',
         'ERROR_SHOP_NAME': 'Shop name is required',
         'SUCCESS_SETTINGS_SAVED': 'Settings saved successfully!',
@@ -154,7 +157,21 @@ export const translations: any = {
         'SR_NO': 'Sr',
         'TOTAL_ITEMS': 'Total Items',
         'TAX_GST': 'Tax (GST)',
-        'VISIT_AGAIN': 'Thank you for shopping! Visit again.'
+        'VISIT_AGAIN': 'Thank you for shopping! Visit again.',
+
+        // Reports Page
+        'START_DATE': 'Start Date',
+        'END_DATE': 'End Date',
+        'TO': 'to',
+        'GENERATE': 'Generate',
+        'SALES_REPORT': 'Sales Report',
+        'TOP_PRODUCT': 'Top Product',
+        'N_A': 'N/A',
+        'DOWNLOAD_PDF': 'Download as PDF',
+        'EXPORT_JSON': 'Export JSON',
+        'NO_INVOICES_PERIOD': 'No invoices found for the selected period',
+        'QTY': 'Qty',
+        'FIXED': 'Fixed'
     },
     gu: {
         'DASHBOARD': 'ડેશબોર્ડ',
@@ -235,6 +252,7 @@ export const translations: any = {
         'SELECT_PRODUCT': 'ઉત્પાદન પસંદ કરો',
         'ADD_ITEM': 'વસ્તુ ઉમેરો',
         'SAVE_INVOICE': 'બિલ સેવ કરો',
+        'UPDATE_INVOICE': 'બિલ અપડેટ કરો',
         'BILL_TO': 'બિલ કોને',
         'INVOICE_DETAILS': 'બિલ વિગતો',
         'THANK_YOU': 'અમારી સાથે વેપાર કરવા બદલ આભાર!',
@@ -258,6 +276,7 @@ export const translations: any = {
 
         // Invoice History
         'INVOICE_HISTORY_TITLE': 'બિલ ઇતિહાસ',
+        'VIEW_ALL_INVOICES': 'તમામ બિલ જુઓ',
         'NO_INVOICES': 'હજુ સુધી કોઈ બિલ નથી',
         'NO_INVOICES_SEARCH': 'તમારી શોધ પ્રમાણે કોઈ બિલ મળ્યું નહીં',
         'INVOICE_DETAILS_TITLE': 'બિલ વિગતો',
@@ -279,6 +298,7 @@ export const translations: any = {
         'ERROR_CUSTOMER_NAME': 'કૃપા કરીને ગ્રાહકનું નામ દાખલ કરો',
         'ERROR_ADD_ITEM': 'કૃપા કરીને ઓછામાં ઓછી એક માન્ય વસ્તુ ઉમેરો',
         'SUCCESS_INVOICE_SAVED': 'બિલ સફળતાપૂર્વક સેવ થયું!',
+        'SUCCESS_INVOICE_UPDATED': 'બિલ સફળતાપૂર્વક અપડેટ થયું!',
         'ERROR_SAVING_INVOICE': 'બિલ સેવ કરવામાં ભૂલ',
         'ERROR_SHOP_NAME': 'દુકાનનું નામ જરૂરી છે',
         'SUCCESS_SETTINGS_SAVED': 'સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ!',
@@ -311,6 +331,20 @@ export const translations: any = {
         'SR_NO': 'ક્રમ',
         'TOTAL_ITEMS': 'કુલ વસ્તુઓ',
         'TAX_GST': 'કર (GST)',
-        'VISIT_AGAIN': 'ખરીદી કરવા બદલ આભાર! ફરી આવજો.'
+        'VISIT_AGAIN': 'ખરીદી કરવા બદલ આભાર! ફરી આવજો.',
+
+        // Reports Page
+        'START_DATE': 'શરૂઆતની તારીખ',
+        'END_DATE': 'અંતિમ તારીખ',
+        'TO': 'થી',
+        'GENERATE': 'બનાવો',
+        'SALES_REPORT': 'વેચાણ અહેવાલ',
+        'TOP_PRODUCT': 'ટોચનું ઉત્પાદન',
+        'N_A': 'ઉપલબ્ધ નથી',
+        'DOWNLOAD_PDF': 'PDF તરીકે ડાઉનલોડ કરો',
+        'EXPORT_JSON': 'JSON નિકાસ કરો',
+        'NO_INVOICES_PERIOD': 'પસંદ કરેલા સમયગાળા માટે કોઈ બિલ મળ્યું નથી',
+        'QTY': 'જથ્થો',
+        'FIXED': 'નિશ્ચિત'
     }
 };

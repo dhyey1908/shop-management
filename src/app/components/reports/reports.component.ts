@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Report } from '../../models/models';
 import { TranslationService } from '../../services/translation.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
     selector: 'app-reports',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, TranslatePipe],
     templateUrl: './reports.component.html',
     styleUrl: './reports.component.css'
 })

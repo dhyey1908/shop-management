@@ -73,6 +73,13 @@ export class InvoiceHistoryComponent implements OnInit {
         }
     }
 
+    editInvoice(invoice: Invoice) {
+        // Navigate to billing page with invoice data for editing
+        this.router.navigate(['/billing'], {
+            state: { editInvoice: invoice, returnUrl: '/invoice-history' }
+        });
+    }
+
     formatCurrency(amount: number): string {
         return '₹ ' + amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
