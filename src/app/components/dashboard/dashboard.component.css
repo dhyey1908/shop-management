@@ -71,11 +71,11 @@
 }
 
 .action-icon.new-invoice {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: linear-gradient(135deg, #6366f1, #818cf8);
 }
 
 .action-icon.products {
-    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
 }
 
 .action-icon.customers {
@@ -87,7 +87,7 @@
 }
 
 .action-icon.settings {
-    background: linear-gradient(135deg, #64748b, #94a3b8);
+    background: linear-gradient(135deg, #6b7280, #9ca3af);
 }
 
 .action-icon.pending {
@@ -95,18 +95,18 @@
 }
 
 .action-icon.invoice-history {
-    background: linear-gradient(135deg, #06b6d4, #22d3ee);
+    background: linear-gradient(135deg, #14b8a6, #2dd4bf);
 }
 
 .action-text h3 {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
 }
 
 .action-text p {
-    font-size: 0.875rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     margin: 0;
 }
@@ -202,7 +202,7 @@
 }
 
 .stat-content h4 {
-    font-size: 0.875rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
@@ -211,7 +211,7 @@
 }
 
 .stat-value {
-    font-size: 1.875rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
