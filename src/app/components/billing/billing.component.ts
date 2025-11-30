@@ -321,9 +321,12 @@ export class BillingComponent implements OnInit {
     }
 
     getEmptyRows(): number[] {
-        const filledRows = this.getTotalItemCount();
-        const minRows = 5;
-        const emptyRowsCount = Math.max(0, minRows - filledRows);
-        return Array(emptyRowsCount).fill(0);
+        // Render only the actual item rows in the print template.
+        // Previously this method used the total item quantity and forced a minimum
+        // of 5 rows which caused extra blank rows to appear. Return an empty
+        // array so no extra empty rows are rendered. If you want a minimum
+        // number of rows for printing, change this method to use a configurable
+        // min value instead.
+        return [];
     }
 }

@@ -24,7 +24,7 @@
 }
 
 .dashboard-logo {
-    height: 64px;
+    height: 100px;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
@@ -381,6 +381,29 @@ td {
     padding: 0.25rem 0.5rem;
     background: rgba(37, 99, 235, 0.1);
     border-radius: var(--radius-sm);
+}
+
+/* Developer Credit */
+.developer-credit {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 2px solid var(--border);
+}
+
+.developer-credit p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.developer-credit strong {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 /* Responsive */

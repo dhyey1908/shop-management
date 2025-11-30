@@ -50,7 +50,8 @@
                         <td>
                             <span class="badge" [class.badge-success]="invoice.status === 'Paid'"
                                 [class.badge-warning]="invoice.status === 'Pending'">
-                                {{ invoice.status || 'Paid' }}
+                                {{ (invoice.status || 'Paid') === 'Paid' ? ('PAID' | translate) : ('PENDING' |
+                                translate) }}
                             </span>
                         </td>
                         <td class="no-print">
@@ -155,3 +156,4 @@
             </div>
         </div>
     </div>
+</div>
