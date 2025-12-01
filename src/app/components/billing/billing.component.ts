@@ -37,7 +37,7 @@ export class BillingComponent implements OnInit {
     discountPercentage = 0;
     discountAmount = 0;
     grandTotal = 0;
-    paymentStatus: 'Paid' | 'Pending' = 'Paid';
+    paymentStatus: 'Paid' | 'Pending' = 'Pending';
     isEditMode = false;
     returnUrl = '/dashboard'; // Default return URL
 
@@ -279,6 +279,7 @@ export class BillingComponent implements OnInit {
             this.customerAddress = '';
             this.customerGST = '';
             this.items = [];
+            this.paymentStatus = 'Pending';
             this.addNewItemRow();
             this.calculateTotals();
         }
