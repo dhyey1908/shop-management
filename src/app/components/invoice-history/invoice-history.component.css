@@ -224,15 +224,224 @@
         display: none !important;
     }
 
-    .modal-overlay {
-        position: static;
-        background: none;
+    .print-only {
+        display: block !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+        size: auto;
+    }
+
+    body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .print-template {
+        font-family: 'Inter', 'Arial', sans-serif;
+        color: #000;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .print-invoice {
+        border: 2px solid #000;
         padding: 0;
     }
 
+    /* Header Box with Shop Name and Mobile - inline phone beside name */
+    .print-header-box {
+        border-bottom: 2px solid #000;
+        padding: 12px;
+        background: #fff;
+        /* Use flex to keep shop name and phone on the same line and centered */
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .shop-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        /* remove bottom margin so phone can sit on same line */
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    .shop-mobile {
+        font-size: 0.85rem;
+        /* smaller than shop title */
+        font-weight: 600;
+        color: #000;
+        opacity: 0.9;
+        /* ensure it doesn't force a new line */
+        white-space: nowrap;
+    }
+
+    /* Customer and Date Row */
+    .customer-date-row {
+        border-bottom: 2px solid #000;
+        padding: 10px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .customer-info,
+    .date-info {
+        font-size: 0.95rem;
+    }
+
+    .customer-info .label,
+    .date-info .label {
+        font-weight: 600;
+        margin-right: 8px;
+    }
+
+    .customer-info .value,
+    .date-info .value {
+        font-weight: 400;
+    }
+
+    /* Bordered Table */
+    .print-table-bordered {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .print-table-bordered th,
+    .print-table-bordered td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .print-table-bordered thead th {
+        background: #fff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .print-table-bordered tbody td {
+        font-size: 0.9rem;
+    }
+
+    /* Column Widths */
+    .col-sr {
+        width: 8%;
+        text-align: center !important;
+    }
+
+    .col-item {
+        width: 42%;
+        text-align: left !important;
+    }
+
+    .col-qty {
+        width: 12%;
+        text-align: center !important;
+    }
+
+    .col-price {
+        width: 18%;
+        text-align: right !important;
+    }
+
+    .col-total {
+        width: 20%;
+        text-align: right !important;
+    }
+
+    /* Empty Rows */
+    .empty-row td {
+        height: 30px;
+        color: transparent;
+    }
+
+    /* Totals Section */
+    .totals-section {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 10px 12px;
+        background: #f9f9f9;
+    }
+
+    .compact-totals-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .total-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .total-column .total-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-align: center;
+        margin-bottom: 4px;
+        white-space: nowrap;
+    }
+
+    .total-column .total-value {
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    /* Grand Total Column - Make it stand out */
+    .grand-total-column {
+        background: #fff;
+        padding: 8px 12px;
+        border: 2px solid #000;
+        border-radius: 4px;
+    }
+
+    .grand-total-column .total-label {
+        font-weight: 800;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    .grand-total-column .total-value {
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+
+    /* Thank You Section */
+    .thank-you-section {
+        padding: 12px;
+        text-align: center;
+        border-bottom: none;
+    }
+
+    .thank-you-section p {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 500;
+        font-style: italic;
+    }
+
+    /* Hide modal content when printing */
+    .modal-overlay,
     .modal-content {
-        box-shadow: none;
-        max-height: none;
+        display: none !important;
     }
 }
 

@@ -31,6 +31,27 @@ export class InvoiceHistoryComponent implements OnInit {
             this.invoices = invoices.sort((a, b) => b.invoiceNumber - a.invoiceNumber);
             this.filteredInvoices = this.invoices;
         });
+
+        this.dataService.settings$.subscribe(settings => {
+            if (settings) {
+                this.shopName = settings.shopName;
+                this.shopPhone = settings.phone || '';
+            }
+        });
+    }
+
+    shopName = '';
+    shopPhone = '';
+
+    getTotalItemCount(): number {
+        if (!this.selectedInvoice) return 0;
+        return this.selectedInvoice.items
+            .filter(item => item.productName)
+            .reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    getEmptyRows(): number[] {
+        return [];
     }
 
     async search() {
