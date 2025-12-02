@@ -149,7 +149,9 @@ export class BillingComponent implements OnInit {
     }
 
     goToAddCustomer() {
-        this.router.navigate(['/customers']);
+        this.router.navigate(['/customers'], {
+            state: { returnUrl: '/billing' }
+        });
     }
 
     addNewItemRow() {
@@ -258,7 +260,6 @@ export class BillingComponent implements OnInit {
                 // Navigate back to the page where user came from
                 this.router.navigate([this.returnUrl]);
             } else {
-                this.clearForm();
                 this.router.navigate(['/dashboard']);
             }
         } catch (error) {

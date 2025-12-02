@@ -1,5 +1,5 @@
 {
-  "name": "shop-management",
+  "name": "shop-flow",
   "version": "1.0.0",
   "description": "Cross-platform Billing and Shop Management Desktop App",
   "main": "electron/main.js",
@@ -26,11 +26,33 @@
       "electron/**/*"
     ],
     "win": {
-      "target": ["nsis"],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "icon": "electron/icons/icon.png"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "electron/icons/icon.png",
+      "uninstallerIcon": "electron/icons/icon.png",
+      "installerHeaderIcon": "electron/icons/icon.png",
+      "runAfterFinish": true
+    },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "electron/icons/icon.png",
       "category": "Office"
     }

@@ -18,6 +18,7 @@ export class CustomersComponent implements OnInit {
     customers: Customer[] = [];
     showForm = false;
     editMode = false;
+    returnUrl = '/dashboard'; // Default return URL
 
     currentCustomer: Customer = this.getEmptyCustomer();
 
@@ -27,6 +28,14 @@ export class CustomersComponent implements OnInit {
         this.dataService.customers$.subscribe(customers => {
             this.customers = customers;
         });
+
+        // Check if we have a return URL from navigation state
+        const navigation = this.router.getCurrentNavigation();
+        const returnUrl = navigation?.extras?.state?.['returnUrl'] || history.state?.returnUrl;
+
+        if (returnUrl) {
+            this.returnUrl = returnUrl;
+        }
     }
 
     getEmptyCustomer(): Customer {
@@ -81,7 +90,7 @@ export class CustomersComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate([this.returnUrl]);
     }
 
     formatDate(date: string): string {
