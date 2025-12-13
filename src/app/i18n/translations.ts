@@ -171,7 +171,13 @@ export const translations: any = {
         'EXPORT_JSON': 'Export JSON',
         'NO_INVOICES_PERIOD': 'No invoices found for the selected period',
         'QTY': 'Qty',
-        'FIXED': 'Fixed'
+        'SUCCESS_CUSTOMER_DELETED': 'Customer deleted successfully',
+        'SUCCESS_CUSTOMER_UPDATED': 'Customer updated successfully',
+        'SUCCESS_CUSTOMER_ADDED': 'Customer added successfully',
+        'SUCCESS_PRODUCT_DELETED': 'Product deleted successfully',
+        'SUCCESS_PRODUCT_UPDATED': 'Product updated successfully',
+        'SUCCESS_PRODUCT_ADDED': 'Product added successfully',
+        'SUCCESS_INVOICE_PAID': 'Invoice marked as paid'
     },
     gu: {
         'DASHBOARD': 'ડેશબોર્ડ',
@@ -310,6 +316,13 @@ export const translations: any = {
         'ERROR_DATE_RANGE': 'શરૂઆતની તારીખ અંતિમ તારીખ પહેલાં હોવી જોઈએ',
         'ERROR_REQUIRED_FIELDS': 'કૃપા કરીને તમામ જરૂરી ફીલ્ડ ભરો',
         'ERROR_NAME_REQUIRED': 'કૃપા કરીને નામ ભરો (જરૂરી ફીલ્ડ)',
+        'SUCCESS_CUSTOMER_DELETED': 'ગ્રાહક સફળતાપૂર્વક ડિલીટ થયો',
+        'SUCCESS_CUSTOMER_UPDATED': 'ગ્રાહક સફળતાપૂર્વક અપડેટ થયો',
+        'SUCCESS_CUSTOMER_ADDED': 'ગ્રાહક સફળતાપૂર્વક ઉમેરાયો',
+        'SUCCESS_PRODUCT_DELETED': 'ઉત્પાદન સફળતાપૂર્વક ડિલીટ થયું',
+        'SUCCESS_PRODUCT_UPDATED': 'ઉત્પાદન સફળતાપૂર્વક અપડેટ થયું',
+        'SUCCESS_PRODUCT_ADDED': 'ઉત્પાદન સફળતાપૂર્વક ઉમેરાયું',
+        'SUCCESS_INVOICE_PAID': 'બિલ ચૂકવેલ તરીકે નિર્દેશિત થયું',
 
         // Confirmation Dialogs
         'CONFIRM_DELETE_PRODUCT': 'શું તમે ખરેખર ડિલીટ કરવા માંગો છો',

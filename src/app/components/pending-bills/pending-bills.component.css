@@ -14,7 +14,10 @@
 .page-header h2 {
     margin: 0;
     font-weight: 700;
-    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .card {
@@ -69,6 +72,7 @@ td {
 .btn-secondary {
     background: var(--bg-secondary);
     color: var(--text-primary);
+    border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {

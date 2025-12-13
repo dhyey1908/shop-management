@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
 import { Invoice } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-invoice-history',
@@ -20,7 +21,12 @@ export class InvoiceHistoryComponent implements OnInit {
     searchTerm = '';
     selectedInvoice: Invoice | null = null;
 
-    constructor(private dataService: DataService, private router: Router, private translationService: TranslationService) { }
+    constructor(
+        private dataService: DataService,
+        private router: Router,
+        private translationService: TranslationService,
+        private notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         this.loadInvoices();
@@ -84,9 +90,10 @@ export class InvoiceHistoryComponent implements OnInit {
     }
 
     async markAsPaid(invoice: Invoice) {
-        if (confirm(`${this.translationService.translate('CONFIRM_MARK_PAID')} #${invoice.invoiceNumber} ${this.translationService.translate('AS_PAID')}`)) {
+        if (await this.notificationService.confirm(`${this.translationService.translate('CONFIRM_MARK_PAID')} #${invoice.invoiceNumber} ${this.translationService.translate('AS_PAID')}`)) {
             const updatedInvoice: Invoice = { ...invoice, status: 'Paid' };
             await this.dataService.saveInvoice(updatedInvoice);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_INVOICE_PAID'));
 
             if (this.selectedInvoice && this.selectedInvoice.invoiceNumber === invoice.invoiceNumber) {
                 this.selectedInvoice = updatedInvoice;

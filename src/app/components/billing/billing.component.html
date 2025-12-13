@@ -43,7 +43,7 @@
                         <th style="width: 40%">{{ 'ITEM_NAME' | translate }}</th>
                         <th style="width: 15%">{{ 'QUANTITY' | translate }}</th>
                         <th style="width: 20%">{{ 'PRICE' | translate }}</th>
-                        <th style="width: 20%">{{ 'TOTAL' | translate }}</th>
+                        <th style="width: 10%">{{ 'TOTAL' | translate }}</th>
                         <th style="width: 5%"></th>
                     </tr>
                 </thead>
@@ -56,14 +56,14 @@
                             </app-searchable-dropdown>
                         </td>
                         <td>
-                            <input type="number" class="form-control text-center" [(ngModel)]="item.quantity"
+                            <input type="number" class="form-control text-start" [(ngModel)]="item.quantity"
                                 (change)="updateQuantity(i, item.quantity)" min="1">
                         </td>
                         <td>
-                            <input type="number" class="form-control text-right" [(ngModel)]="item.price"
+                            <input type="number" class="form-control text-start" [(ngModel)]="item.price"
                                 (change)="updatePrice(i, item.price)" min="0">
                         </td>
-                        <td class="text-right total-cell">
+                        <td class="text-start total-cell">
                             {{ formatCurrency(item.total) }}
                         </td>
                         <td class="text-center">

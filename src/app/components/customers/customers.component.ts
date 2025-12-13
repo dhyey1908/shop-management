@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
 import { Customer } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-customers',
@@ -22,7 +23,12 @@ export class CustomersComponent implements OnInit {
 
     currentCustomer: Customer = this.getEmptyCustomer();
 
-    constructor(private dataService: DataService, private router: Router, private translationService: TranslationService) { }
+    constructor(
+        private dataService: DataService,
+        private router: Router,
+        private translationService: TranslationService,
+        private notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         this.dataService.customers$.subscribe(customers => {
@@ -63,21 +69,24 @@ export class CustomersComponent implements OnInit {
     }
 
     async deleteCustomer(customer: Customer) {
-        if (confirm(`${this.translationService.translate('CONFIRM_DELETE_CUSTOMER')} "${customer.name}"?`)) {
+        if (await this.notificationService.confirm(`${this.translationService.translate('CONFIRM_DELETE_CUSTOMER')} "${customer.name}"?`)) {
             await this.dataService.deleteCustomer(customer.id);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_CUSTOMER_DELETED'));
         }
     }
 
     async saveCustomer() {
         if (!this.currentCustomer.name) {
-            alert(this.translationService.translate('ERROR_NAME_REQUIRED'));
+            this.notificationService.showError(this.translationService.translate('ERROR_NAME_REQUIRED'));
             return;
         }
 
         if (this.editMode) {
             await this.dataService.updateCustomer(this.currentCustomer);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_CUSTOMER_UPDATED'));
         } else {
             await this.dataService.addCustomer(this.currentCustomer);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_CUSTOMER_ADDED'));
         }
 
         this.showForm = false;

@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
 import { Product } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-products',
@@ -21,7 +22,12 @@ export class ProductsComponent implements OnInit {
 
     currentProduct: Product = this.getEmptyProduct();
 
-    constructor(private dataService: DataService, private router: Router, private translationService: TranslationService) { }
+    constructor(
+        private dataService: DataService,
+        private router: Router,
+        private translationService: TranslationService,
+        private notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         this.dataService.products$.subscribe(products => {
@@ -51,21 +57,24 @@ export class ProductsComponent implements OnInit {
     }
 
     async deleteProduct(product: Product) {
-        if (confirm(`${this.translationService.translate('CONFIRM_DELETE_PRODUCT')} "${product.name}"?`)) {
+        if (await this.notificationService.confirm(`${this.translationService.translate('CONFIRM_DELETE_PRODUCT')} "${product.name}"?`)) {
             await this.dataService.deleteProduct(product.id);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_PRODUCT_DELETED'));
         }
     }
 
     async saveProduct() {
         if (!this.currentProduct.name || this.currentProduct.price <= 0) {
-            alert(this.translationService.translate('ERROR_REQUIRED_FIELDS'));
+            this.notificationService.showError(this.translationService.translate('ERROR_REQUIRED_FIELDS'));
             return;
         }
 
         if (this.editMode) {
             await this.dataService.updateProduct(this.currentProduct);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_PRODUCT_UPDATED'));
         } else {
             await this.dataService.addProduct(this.currentProduct);
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_PRODUCT_ADDED'));
         }
 
         this.showForm = false;

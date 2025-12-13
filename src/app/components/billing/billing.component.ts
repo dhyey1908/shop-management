@@ -7,6 +7,7 @@ import { SearchableDropdownComponent } from '../searchable-dropdown/searchable-d
 import { Product, Invoice, InvoiceItem, Customer } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-billing',
@@ -50,7 +51,8 @@ export class BillingComponent implements OnInit {
     constructor(
         private dataService: DataService,
         private router: Router,
-        private translationService: TranslationService
+        private translationService: TranslationService,
+        private notificationService: NotificationService
     ) { }
 
     async ngOnInit() {
@@ -220,7 +222,7 @@ export class BillingComponent implements OnInit {
 
     async saveInvoice() {
         if (!this.customerName.trim()) {
-            alert(this.translationService.translate('ERROR_CUSTOMER_NAME'));
+            this.notificationService.showError(this.translationService.translate('ERROR_CUSTOMER_NAME'));
             return;
         }
 
@@ -228,7 +230,7 @@ export class BillingComponent implements OnInit {
         const validItems = this.items.filter(item => item.productId && item.quantity > 0);
 
         if (validItems.length === 0) {
-            alert(this.translationService.translate('ERROR_ADD_ITEM'));
+            this.notificationService.showError(this.translationService.translate('ERROR_ADD_ITEM'));
             return;
         }
 
@@ -254,7 +256,7 @@ export class BillingComponent implements OnInit {
         try {
             await this.dataService.saveInvoice(invoice);
             const successMessage = this.isEditMode ? 'SUCCESS_INVOICE_UPDATED' : 'SUCCESS_INVOICE_SAVED';
-            alert(this.translationService.translate(successMessage));
+            this.notificationService.showSuccess(this.translationService.translate(successMessage));
 
             if (this.isEditMode) {
                 // Navigate back to the page where user came from
@@ -263,7 +265,7 @@ export class BillingComponent implements OnInit {
                 this.router.navigate(['/dashboard']);
             }
         } catch (error) {
-            alert(this.translationService.translate('ERROR_SAVING_INVOICE'));
+            this.notificationService.showError(this.translationService.translate('ERROR_SAVING_INVOICE'));
             console.error(error);
         }
     }
@@ -272,8 +274,8 @@ export class BillingComponent implements OnInit {
         window.print();
     }
 
-    clearForm() {
-        if (confirm(this.translationService.translate('CONFIRM_CLEAR_FORM'))) {
+    async clearForm() {
+        if (await this.notificationService.confirm(this.translationService.translate('CONFIRM_CLEAR_FORM'))) {
             this.selectedCustomerId = '';
             this.customerName = '';
             this.customerPhone = '';
@@ -286,9 +288,9 @@ export class BillingComponent implements OnInit {
         }
     }
 
-    goBack() {
+    async goBack() {
         if (this.items.length > 1 || (this.items.length === 1 && this.items[0].productId) || this.selectedCustomerId) {
-            if (!confirm(this.translationService.translate('CONFIRM_GO_BACK'))) {
+            if (!await this.notificationService.confirm(this.translationService.translate('CONFIRM_GO_BACK'))) {
                 return;
             }
         }

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 
 let mainWindow;
 
@@ -9,42 +10,48 @@ const dataDir = path.join(app.getPath('userData'), 'data');
 const invoicesDir = path.join(dataDir, 'invoices');
 
 // Ensure data directories exist
-function ensureDataDirectories() {
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-  if (!fs.existsSync(invoicesDir)) {
-    fs.mkdirSync(invoicesDir, { recursive: true });
-  }
+async function ensureDataDirectories() {
+  try {
+    await fsPromises.mkdir(dataDir, { recursive: true });
+    await fsPromises.mkdir(invoicesDir, { recursive: true });
 
-  // Initialize default files if they don't exist
-  const productsFile = path.join(dataDir, 'products.json');
-  const customersFile = path.join(dataDir, 'customers.json');
-  const settingsFile = path.join(dataDir, 'settings.json');
+    // Initialize default files if they don't exist
+    const productsFile = path.join(dataDir, 'products.json');
+    const customersFile = path.join(dataDir, 'customers.json');
+    const settingsFile = path.join(dataDir, 'settings.json');
 
-  if (!fs.existsSync(productsFile)) {
-    fs.writeFileSync(productsFile, JSON.stringify([], null, 2));
-  }
+    try {
+      await fsPromises.access(productsFile);
+    } catch {
+      await fsPromises.writeFile(productsFile, JSON.stringify([], null, 2));
+    }
 
-  if (!fs.existsSync(customersFile)) {
-    fs.writeFileSync(customersFile, JSON.stringify([], null, 2));
-  }
+    try {
+      await fsPromises.access(customersFile);
+    } catch {
+      await fsPromises.writeFile(customersFile, JSON.stringify([], null, 2));
+    }
 
-  if (!fs.existsSync(settingsFile)) {
-    const defaultSettings = {
-      shopName: 'My Shop',
-      address: '',
-      gstNumber: '',
-      logo: '',
-      taxPercentage: 0,
-      defaultDiscount: 0,
-      defaultDiscountType: 'fixed',
-      invoiceStartNumber: 1001,
-      currentInvoiceNumber: 1001,
-      phone: '',
-      email: ''
-    };
-    fs.writeFileSync(settingsFile, JSON.stringify(defaultSettings, null, 2));
+    try {
+      await fsPromises.access(settingsFile);
+    } catch {
+      const defaultSettings = {
+        shopName: 'My Shop',
+        address: '',
+        gstNumber: '',
+        logo: '',
+        taxPercentage: 0,
+        defaultDiscount: 0,
+        defaultDiscountType: 'fixed',
+        invoiceStartNumber: 1001,
+        currentInvoiceNumber: 1001,
+        phone: '',
+        email: ''
+      };
+      await fsPromises.writeFile(settingsFile, JSON.stringify(defaultSettings, null, 2));
+    }
+  } catch (error) {
+    console.error('Error ensuring data directories:', error);
   }
 }
 
@@ -82,8 +89,8 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(() => {
-  ensureDataDirectories();
+app.whenReady().then(async () => {
+  await ensureDataDirectories();
   createWindow();
 
   app.on('activate', () => {
@@ -105,11 +112,13 @@ app.on('window-all-closed', () => {
 ipcMain.handle('read-json', async (event, filename) => {
   try {
     const filePath = path.join(dataDir, filename);
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf8');
+    try {
+      await fsPromises.access(filePath);
+      const data = await fsPromises.readFile(filePath, 'utf8');
       return { success: true, data: JSON.parse(data) };
+    } catch {
+      return { success: false, error: 'File not found' };
     }
-    return { success: false, error: 'File not found' };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -119,7 +128,7 @@ ipcMain.handle('read-json', async (event, filename) => {
 ipcMain.handle('write-json', async (event, filename, data) => {
   try {
     const filePath = path.join(dataDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    await fsPromises.writeFile(filePath, JSON.stringify(data, null, 2));
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -130,11 +139,13 @@ ipcMain.handle('write-json', async (event, filename, data) => {
 ipcMain.handle('read-invoice', async (event, invoiceNumber) => {
   try {
     const filePath = path.join(invoicesDir, `${invoiceNumber}.json`);
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf8');
+    try {
+      await fsPromises.access(filePath);
+      const data = await fsPromises.readFile(filePath, 'utf8');
       return { success: true, data: JSON.parse(data) };
+    } catch {
+      return { success: false, error: 'Invoice not found' };
     }
-    return { success: false, error: 'Invoice not found' };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -144,7 +155,7 @@ ipcMain.handle('read-invoice', async (event, invoiceNumber) => {
 ipcMain.handle('write-invoice', async (event, invoiceNumber, data) => {
   try {
     const filePath = path.join(invoicesDir, `${invoiceNumber}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    await fsPromises.writeFile(filePath, JSON.stringify(data, null, 2));
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -154,13 +165,13 @@ ipcMain.handle('write-invoice', async (event, invoiceNumber, data) => {
 // Get all invoices
 ipcMain.handle('get-all-invoices', async () => {
   try {
-    const files = fs.readdirSync(invoicesDir);
+    const files = await fsPromises.readdir(invoicesDir);
     const invoices = [];
 
     for (const file of files) {
       if (file.endsWith('.json')) {
         const filePath = path.join(invoicesDir, file);
-        const data = fs.readFileSync(filePath, 'utf8');
+        const data = await fsPromises.readFile(filePath, 'utf8');
         invoices.push(JSON.parse(data));
       }
     }
@@ -174,13 +185,14 @@ ipcMain.handle('get-all-invoices', async () => {
 // Search invoices
 ipcMain.handle('search-invoices', async (event, searchTerm) => {
   try {
-    const files = fs.readdirSync(invoicesDir);
+    const files = await fsPromises.readdir(invoicesDir);
     const invoices = [];
 
     for (const file of files) {
       if (file.endsWith('.json')) {
         const filePath = path.join(invoicesDir, file);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const fileContent = await fsPromises.readFile(filePath, 'utf8');
+        const data = JSON.parse(fileContent);
 
         // Search in invoice number, customer name, or date
         const searchLower = searchTerm.toLowerCase();
@@ -214,12 +226,10 @@ ipcMain.handle('backup-data', async () => {
       const backupPath = result.filePath.replace('.zip', '');
 
       // Create backup directory
-      if (!fs.existsSync(backupPath)) {
-        fs.mkdirSync(backupPath, { recursive: true });
-      }
+      await fsPromises.mkdir(backupPath, { recursive: true });
 
       // Copy files
-      copyFolderSync(dataDir, backupPath);
+      await copyFolder(dataDir, backupPath);
 
       return { success: true, path: backupPath };
     }
@@ -242,7 +252,7 @@ ipcMain.handle('restore-data', async () => {
       const restorePath = result.filePaths[0];
 
       // Copy files back
-      copyFolderSync(restorePath, dataDir);
+      await copyFolder(restorePath, dataDir);
 
       return { success: true };
     }
@@ -253,24 +263,22 @@ ipcMain.handle('restore-data', async () => {
   }
 });
 
-// Helper function to copy folder
-function copyFolderSync(from, to) {
-  if (!fs.existsSync(to)) {
-    fs.mkdirSync(to, { recursive: true });
-  }
+// Helper function to copy folder recursively
+async function copyFolder(from, to) {
+  await fsPromises.mkdir(to, { recursive: true });
+  const files = await fsPromises.readdir(from);
 
-  const files = fs.readdirSync(from);
-
-  files.forEach(file => {
+  for (const file of files) {
     const fromPath = path.join(from, file);
     const toPath = path.join(to, file);
+    const stat = await fsPromises.stat(fromPath);
 
-    if (fs.statSync(fromPath).isDirectory()) {
-      copyFolderSync(fromPath, toPath);
+    if (stat.isDirectory()) {
+      await copyFolder(fromPath, toPath);
     } else {
-      fs.copyFileSync(fromPath, toPath);
+      await fsPromises.copyFile(fromPath, toPath);
     }
-  });
+  }
 }
 
 // Get data directory path
@@ -293,7 +301,7 @@ ipcMain.handle('upload-logo', async () => {
       const destPath = path.join(dataDir, `logo${ext}`);
 
       // Copy logo to data directory
-      fs.copyFileSync(sourcePath, destPath);
+      await fsPromises.copyFile(sourcePath, destPath);
 
       return { success: true, path: destPath };
     }
@@ -307,13 +315,14 @@ ipcMain.handle('upload-logo', async () => {
 // Filter invoices with advanced criteria
 ipcMain.handle('filter-invoices', async (event, filter) => {
   try {
-    const files = fs.readdirSync(invoicesDir);
+    const files = await fsPromises.readdir(invoicesDir);
     let invoices = [];
 
     for (const file of files) {
       if (file.endsWith('.json')) {
         const filePath = path.join(invoicesDir, file);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const fileContent = await fsPromises.readFile(filePath, 'utf8');
+        const data = JSON.parse(fileContent);
         invoices.push(data);
       }
     }

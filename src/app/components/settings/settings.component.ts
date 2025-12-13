@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
 import { Settings } from '../../models/models';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-settings',
@@ -34,7 +35,8 @@ export class SettingsComponent implements OnInit {
     constructor(
         private dataService: DataService,
         private router: Router,
-        private translationService: TranslationService
+        private translationService: TranslationService,
+        private notificationService: NotificationService
     ) { }
 
     ngOnInit() {
@@ -48,16 +50,18 @@ export class SettingsComponent implements OnInit {
 
     async saveSettings() {
         if (!this.settings.shopName) {
-            alert(this.translationService.translate('ERROR_SHOP_NAME'));
+            this.notificationService.showError(this.translationService.translate('ERROR_SHOP_NAME'));
             return;
         }
 
         await this.dataService.updateSettings(this.settings);
-        alert(this.translationService.translate('SUCCESS_SETTINGS_SAVED'));
+        this.notificationService.showSuccess(this.translationService.translate('SUCCESS_SETTINGS_SAVED'));
     }
 
-    changeLanguage() {
+    async changeLanguage() {
         this.translationService.setLanguage(this.currentLang);
+        this.settings.language = this.currentLang;
+        await this.dataService.updateSettings(this.settings);
     }
 
     async uploadLogo() {
@@ -65,27 +69,27 @@ export class SettingsComponent implements OnInit {
         if (result.success && result.path) {
             this.settings.logo = result.path;
         } else if (result.error) {
-            alert(result.error);
+            this.notificationService.showError(result.error);
         }
     }
 
     async backup() {
         const result = await this.dataService.backupData();
         if (result.success) {
-            alert(this.translationService.translate('SUCCESS_BACKUP'));
+            this.notificationService.showSuccess(this.translationService.translate('SUCCESS_BACKUP'));
         } else {
-            alert(result.error || this.translationService.translate('ERROR_BACKUP'));
+            this.notificationService.showError(result.error || this.translationService.translate('ERROR_BACKUP'));
         }
     }
 
     async restore() {
-        if (confirm(this.translationService.translate('CONFIRM_RESTORE_DATA'))) {
+        if (await this.notificationService.confirm(this.translationService.translate('CONFIRM_RESTORE_DATA'))) {
             const result = await this.dataService.restoreData();
             if (result.success) {
-                alert(this.translationService.translate('SUCCESS_RESTORE'));
+                this.notificationService.showSuccess(this.translationService.translate('SUCCESS_RESTORE'));
                 location.reload();
             } else {
-                alert(result.error || this.translationService.translate('ERROR_RESTORE'));
+                this.notificationService.showError(result.error || this.translationService.translate('ERROR_RESTORE'));
             }
         }
     }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ElectronService } from './electron.service';
 import { Product, Invoice, Settings, DashboardSummary, Customer, InvoiceFilter } from '../models/models';
+import { TranslationService } from './translation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,10 @@ export class DataService {
     settings$ = this.settingsSubject.asObservable();
     invoices$ = this.invoicesSubject.asObservable();
 
-    constructor(private electronService: ElectronService) {
+    constructor(
+        private electronService: ElectronService,
+        private translationService: TranslationService
+    ) {
         this.loadInitialData();
     }
 
@@ -100,6 +104,9 @@ export class DataService {
     // Settings
     async loadSettings() {
         const settings = await this.electronService.getSettings();
+        if (settings && settings.language) {
+            this.translationService.setLanguage(settings.language);
+        }
         this.settingsSubject.next(settings);
     }
 

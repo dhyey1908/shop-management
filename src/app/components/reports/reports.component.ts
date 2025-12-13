@@ -6,6 +6,7 @@ import { DataService } from '../../services/data.service';
 import { Report } from '../../models/models';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'app-reports',
@@ -20,7 +21,12 @@ export class ReportsComponent implements OnInit {
     report: Report | null = null;
     selectedInvoice: any | null = null;
 
-    constructor(private dataService: DataService, private router: Router, private translationService: TranslationService) { }
+    constructor(
+        private dataService: DataService,
+        private router: Router,
+        private translationService: TranslationService,
+        private notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         // Set default dates (last 30 days)
@@ -36,12 +42,12 @@ export class ReportsComponent implements OnInit {
 
     generateReport() {
         if (!this.startDate || !this.endDate) {
-            alert(this.translationService.translate('ERROR_SELECT_DATE'));
+            this.notificationService.showError(this.translationService.translate('ERROR_SELECT_DATE'));
             return;
         }
 
         if (this.startDate > this.endDate) {
-            alert(this.translationService.translate('ERROR_DATE_RANGE'));
+            this.notificationService.showError(this.translationService.translate('ERROR_DATE_RANGE'));
             return;
         }
 

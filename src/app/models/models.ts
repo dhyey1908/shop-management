@@ -56,6 +56,7 @@ export interface Settings {
     currentInvoiceNumber: number;
     phone?: string;
     email?: string;
+    language?: string;
 }
 
 export interface DashboardSummary {

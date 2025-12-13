@@ -5,6 +5,7 @@ import { DataService } from '../../services/data.service';
 import { Invoice } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-pending-bills',
@@ -16,7 +17,12 @@ import { TranslationService } from '../../services/translation.service';
 export class PendingBillsComponent implements OnInit {
   pendingInvoices: Invoice[] = [];
 
-  constructor(private dataService: DataService, private router: Router, private translationService: TranslationService) { }
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private translationService: TranslationService,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
     this.dataService.invoices$.subscribe(invoices => {
@@ -25,9 +31,10 @@ export class PendingBillsComponent implements OnInit {
   }
 
   async markAsPaid(invoice: Invoice) {
-    if (confirm(`${this.translationService.translate('CONFIRM_MARK_PAID')} #${invoice.invoiceNumber} ${this.translationService.translate('AS_PAID')}`)) {
+    if (await this.notificationService.confirm(`${this.translationService.translate('CONFIRM_MARK_PAID')} #${invoice.invoiceNumber} ${this.translationService.translate('AS_PAID')}`)) {
       const updatedInvoice: Invoice = { ...invoice, status: 'Paid' };
       await this.dataService.saveInvoice(updatedInvoice);
+      this.notificationService.showSuccess(this.translationService.translate('SUCCESS_INVOICE_PAID'));
     }
   }
 
