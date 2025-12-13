@@ -36,6 +36,7 @@ export class BillingComponent implements OnInit {
     items: any[] = []; // Allow partial items during entry
     subtotal = 0;
     discountPercentage = 0;
+    defaultDiscount = 0; // Store default discount
     discountAmount = 0;
     grandTotal = 0;
     paymentStatus: 'Paid' | 'Pending' = 'Pending';
@@ -80,6 +81,7 @@ export class BillingComponent implements OnInit {
         this.dataService.settings$.subscribe(settings => {
             if (settings) {
                 this.discountPercentage = settings.defaultDiscount;
+                this.defaultDiscount = settings.defaultDiscount; // Store for reset
                 this.shopName = settings.shopName;
                 this.shopAddress = settings.address;
                 this.shopPhone = settings.phone || '';
@@ -220,10 +222,15 @@ export class BillingComponent implements OnInit {
         this.calculateTotals();
     }
 
-    async saveInvoice() {
+    async saveInvoice(navigate: boolean = true): Promise<boolean> {
         if (!this.customerName.trim()) {
             this.notificationService.showError(this.translationService.translate('ERROR_CUSTOMER_NAME'));
-            return;
+            return false;
+        }
+
+        if (!this.date) {
+            this.notificationService.showError(this.translationService.translate('ERROR_DATE_REQUIRED'));
+            return false;
         }
 
         // Filter out items with no product selected
@@ -231,7 +238,7 @@ export class BillingComponent implements OnInit {
 
         if (validItems.length === 0) {
             this.notificationService.showError(this.translationService.translate('ERROR_ADD_ITEM'));
-            return;
+            return false;
         }
 
         const invoice: Invoice = {
@@ -258,34 +265,65 @@ export class BillingComponent implements OnInit {
             const successMessage = this.isEditMode ? 'SUCCESS_INVOICE_UPDATED' : 'SUCCESS_INVOICE_SAVED';
             this.notificationService.showSuccess(this.translationService.translate(successMessage));
 
-            if (this.isEditMode) {
-                // Navigate back to the page where user came from
-                this.router.navigate([this.returnUrl]);
-            } else {
-                this.router.navigate(['/dashboard']);
+            if (navigate) {
+                if (this.isEditMode) {
+                    // Navigate back to the page where user came from
+                    this.router.navigate([this.returnUrl]);
+                } else {
+                    this.router.navigate(['/dashboard']);
+                }
             }
+            return true;
         } catch (error) {
             this.notificationService.showError(this.translationService.translate('ERROR_SAVING_INVOICE'));
             console.error(error);
+            return false;
         }
     }
 
-    printInvoice() {
-        window.print();
+    async printInvoice() {
+        const saved = await this.saveInvoice(false);
+        if (saved) {
+            // Use afterprint event to ensure we clear ONLY after the print dialog is closed
+            // This prevents the form from clearing while the print preview is generating
+            const cleanup = () => {
+                this.resetForm();
+                window.removeEventListener('afterprint', cleanup);
+            };
+
+            window.addEventListener('afterprint', cleanup);
+
+            // Wait a bit for UI to update if needed, then print
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
     }
 
     async clearForm() {
         if (await this.notificationService.confirm(this.translationService.translate('CONFIRM_CLEAR_FORM'))) {
-            this.selectedCustomerId = '';
-            this.customerName = '';
-            this.customerPhone = '';
-            this.customerAddress = '';
-            this.customerGST = '';
-            this.items = [];
-            this.paymentStatus = 'Pending';
-            this.addNewItemRow();
-            this.calculateTotals();
+            this.resetForm();
         }
+    }
+
+    async resetForm() {
+        this.selectedCustomerId = '';
+        this.customerName = '';
+        this.customerPhone = '';
+        this.customerAddress = '';
+        this.customerGST = '';
+        this.items = [];
+        this.paymentStatus = 'Pending';
+        this.discountPercentage = this.defaultDiscount; // Reset to default discount
+        this.addNewItemRow();
+        this.calculateTotals();
+
+        // Get next invoice number
+        this.invoiceNumber = await this.dataService.getNextInvoiceNumber();
+        // Reset date to today
+        this.date = new Date().toISOString().split('T')[0];
+        // Reset edit mode if we were editing
+        this.isEditMode = false;
     }
 
     async goBack() {

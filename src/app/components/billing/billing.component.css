@@ -130,6 +130,7 @@
     background: transparent;
     padding: 0.25rem;
     font-weight: 600;
+    font-size: 1.25rem;
     color: var(--text-primary);
 }
 

@@ -136,6 +136,7 @@ export const translations: any = {
         'ERROR_DATE_RANGE': 'Start date must be before end date',
         'ERROR_REQUIRED_FIELDS': 'Please fill all required fields',
         'ERROR_NAME_REQUIRED': 'Please fill name (required field)',
+        'ERROR_DATE_REQUIRED': 'Please select a date',
 
         // Confirmation Dialogs
         'CONFIRM_DELETE_PRODUCT': 'Are you sure you want to delete',
@@ -316,6 +317,7 @@ export const translations: any = {
         'ERROR_DATE_RANGE': 'શરૂઆતની તારીખ અંતિમ તારીખ પહેલાં હોવી જોઈએ',
         'ERROR_REQUIRED_FIELDS': 'કૃપા કરીને તમામ જરૂરી ફીલ્ડ ભરો',
         'ERROR_NAME_REQUIRED': 'કૃપા કરીને નામ ભરો (જરૂરી ફીલ્ડ)',
+        'ERROR_DATE_REQUIRED': 'કૃપા કરીને તારીખ પસંદ કરો',
         'SUCCESS_CUSTOMER_DELETED': 'ગ્રાહક સફળતાપૂર્વક ડિલીટ થયો',
         'SUCCESS_CUSTOMER_UPDATED': 'ગ્રાહક સફળતાપૂર્વક અપડેટ થયો',
         'SUCCESS_CUSTOMER_ADDED': 'ગ્રાહક સફળતાપૂર્વક ઉમેરાયો',
