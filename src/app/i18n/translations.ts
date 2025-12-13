@@ -158,7 +158,7 @@ export const translations: any = {
         'SR_NO': 'Sr',
         'TOTAL_ITEMS': 'Total Items',
         'TAX_GST': 'Tax (GST)',
-        'VISIT_AGAIN': 'Thank you for shopping! Visit again.',
+        'VISIT_AGAIN': 'Thank you for shopping!',
 
         // Reports Page
         'START_DATE': 'Start Date',
@@ -346,7 +346,7 @@ export const translations: any = {
         'SR_NO': 'ક્રમ',
         'TOTAL_ITEMS': 'કુલ વસ્તુઓ',
         'TAX_GST': 'કર (GST)',
-        'VISIT_AGAIN': 'ખરીદી કરવા બદલ આભાર! ફરી આવજો.',
+        'VISIT_AGAIN': 'ખરીદી કરવા બદલ આભાર!',
 
         // Reports Page
         'START_DATE': 'શરૂઆતની તારીખ',

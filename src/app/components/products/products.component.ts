@@ -54,6 +54,7 @@ export class ProductsComponent implements OnInit {
         this.editMode = true;
         this.currentProduct = { ...product };
         this.showForm = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async deleteProduct(product: Product) {

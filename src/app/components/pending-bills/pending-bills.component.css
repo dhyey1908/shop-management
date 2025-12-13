@@ -1,6 +1,6 @@
 .pending-bills-container {
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -109,4 +109,11 @@ td {
 .empty-state p {
     margin: 0;
     font-size: 1.125rem;
+}
+
+/* Pending Bills Table Column Width */
+table th:nth-child(5),
+table td:nth-child(5) {
+    min-width: 150px;
+    white-space: nowrap;
 }

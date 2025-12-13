@@ -303,6 +303,11 @@ textarea.form-control {
   min-height: 100px;
 }
 
+input[type="date"].form-control {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 /* Table */
 .table-container {
   overflow-x: auto;

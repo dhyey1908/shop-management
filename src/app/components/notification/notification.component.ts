@@ -179,6 +179,14 @@ import { NotificationService, Notification, ConfirmationDialog } from '../../ser
             from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
+        /* Hide notifications during print */
+        @media print {
+            .notifications-container,
+            .confirmation-overlay {
+                display: none !important;
+            }
+        }
     `]
 })
 export class NotificationComponent implements OnInit {

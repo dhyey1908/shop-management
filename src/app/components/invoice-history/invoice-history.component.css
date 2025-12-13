@@ -26,7 +26,7 @@
 .search-box {
     display: flex;
     gap: 1rem;
-    max-width: 600px;
+    width: 100%;
 }
 
 .search-box .form-control {
@@ -509,4 +509,22 @@
     background-color: rgba(245, 158, 11, 0.1);
     color: #f59e0b;
     border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* Action Buttons Spacing */
+td.no-print .btn {
+    margin-bottom: 0.5rem;
+}
+
+/* Invoice History Table Column Widths */
+table th:nth-child(5),
+table td:nth-child(5) {
+    min-width: 150px;
+    white-space: nowrap;
+}
+
+table th:nth-child(6),
+table td:nth-child(6) {
+    min-width: 120px;
+    white-space: nowrap;
 }

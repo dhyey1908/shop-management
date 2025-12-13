@@ -66,6 +66,7 @@ export class CustomersComponent implements OnInit {
         this.editMode = true;
         this.currentCustomer = { ...customer };
         this.showForm = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async deleteCustomer(customer: Customer) {
