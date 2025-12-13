@@ -291,7 +291,7 @@ export class ElectronService {
 
     private getDefaultSettings(): Settings {
         return {
-            shopName: 'My Shop',
+            shopName: 'શ્રીનાથ એજન્સી',
             address: '',
             gstNumber: '',
             logo: '',

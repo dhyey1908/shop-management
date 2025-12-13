@@ -36,7 +36,7 @@ async function ensureDataDirectories() {
       await fsPromises.access(settingsFile);
     } catch {
       const defaultSettings = {
-        shopName: 'My Shop',
+        shopName: 'શ્રીનાથ એજન્સી',
         address: '',
         gstNumber: '',
         logo: '',

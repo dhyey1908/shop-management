@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
         totalCustomers: 0
     };
 
-    shopName = 'My Shop';
+    shopName = 'શ્રીનાથ એજન્સી';
     logo = 'logo.png';
     currentFontSize: FontSize = 'medium';
 
