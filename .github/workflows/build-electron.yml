@@ -22,13 +22,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
 
       - name: Install dependencies
         run: npm install
@@ -36,12 +37,11 @@ jobs:
       - name: Build Windows EXE
         run: npm run electron:build:win
 
-      - name: Upload Windows Artifact
+      - name: Upload Windows EXE artifact
         uses: actions/upload-artifact@v4
         with:
           name: shop_flow_${{ github.event.inputs.version }}_windows
-          path: |
-            dist-electron/**/*.exe
+          path: dist-electron/*.exe
 
 
   build-linux:
@@ -49,13 +49,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
 
       - name: Install dependencies
         run: npm install
@@ -63,9 +64,8 @@ jobs:
       - name: Build Linux DEB
         run: npm run electron:build:linux
 
-      - name: Upload Linux Artifact
+      - name: Upload Linux DEB artifact
         uses: actions/upload-artifact@v4
         with:
           name: shop_flow_${{ github.event.inputs.version }}_linux
-          path: |
-            dist-electron/**/*.deb
+          path: dist-electron/*.deb
