@@ -16,13 +16,12 @@
     "electron": "electron .",
     "electron:dev": "ng build --base-href ./ && electron .",
     "electron:build": "ng build --configuration production --base-href ./ && electron-builder",
-    "electron:build:win": "ng build --configuration production --base-href ./ && electron-builder --win",
-    "electron:build:linux": "ng build --configuration production --base-href ./ && electron-builder --linux"
+    "electron:build:win": "ng build --configuration production --base-href ./ && electron-builder --win --publish=never",
+    "electron:build:linux": "ng build --configuration production --base-href ./ && electron-builder --linux --publish=never"
   },
   "build": {
     "appId": "com.shopmanagement.app",
     "productName": "Shop Flow",
-    "publish": "never",
     "directories": {
       "output": "dist-electron"
     },
