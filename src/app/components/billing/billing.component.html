@@ -201,7 +201,8 @@
                     <span class="total-value">{{ formatCurrency(subtotal) }}</span>
                 </div>
                 <div class="total-column" *ngIf="discountAmount > 0">
-                    <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}%):</span>
+                    <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ (subtotal ? (discountAmount / subtotal *
+                        100) : discountPercentage) | number:'1.0-0' }}%):</span>
                     <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
                 </div>
                 <div class="total-column grand-total-column">
