@@ -8,11 +8,12 @@ import { Product, Invoice, InvoiceItem, Customer } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
 import { NotificationService } from '../../services/notification.service';
+import { GujaratiNumberPipe } from '../../pipes/gujarati-number.pipe';
 
 @Component({
     selector: 'app-billing',
     standalone: true,
-    imports: [CommonModule, FormsModule, SearchableDropdownComponent, TranslatePipe],
+    imports: [CommonModule, FormsModule, SearchableDropdownComponent, TranslatePipe, GujaratiNumberPipe],
     templateUrl: './billing.component.html',
     styleUrl: './billing.component.css'
 })

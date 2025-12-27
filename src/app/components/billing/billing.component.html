@@ -151,7 +151,7 @@
             </div>
             <div class="date-info">
                 <span class="label">{{ 'DATE' | translate }}:</span>
-                <span class="value">{{ formatDate(date) }}</span>
+                <span class="value">{{ formatDate(date) | gujaratiNumber }}</span>
             </div>
         </div>
 
@@ -169,11 +169,11 @@
             <tbody>
                 <ng-container *ngFor="let item of items; let i = index">
                     <tr *ngIf="item.productName">
-                        <td class="col-sr">{{ i + 1 }}</td>
+                        <td class="col-sr">{{ i + 1 | gujaratiNumber }}</td>
                         <td class="col-item">{{ item.productName }}</td>
-                        <td class="col-qty">{{ item.quantity }}</td>
-                        <td class="col-price">{{ item.price }}</td>
-                        <td class="col-total">{{ formatCurrency(item.total) }}</td>
+                        <td class="col-qty">{{ item.quantity | gujaratiNumber }}</td>
+                        <td class="col-price">{{ item.price | gujaratiNumber }}</td>
+                        <td class="col-total">{{ formatCurrency(item.total) | gujaratiNumber }}</td>
                     </tr>
                 </ng-container>
                 <!-- Empty rows to maintain structure (minimum 5 rows) -->
@@ -194,20 +194,20 @@
             <div class="compact-totals-row">
                 <div class="total-column">
                     <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
-                    <span class="total-value">{{ getTotalItemCount() }}</span>
+                    <span class="total-value">{{ getTotalItemCount() | gujaratiNumber }}</span>
                 </div>
                 <div class="total-column">
                     <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
-                    <span class="total-value">{{ formatCurrency(subtotal) }}</span>
+                    <span class="total-value">{{ formatCurrency(subtotal) | gujaratiNumber }}</span>
                 </div>
                 <div class="total-column" *ngIf="discountAmount > 0">
                     <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ (subtotal ? (discountAmount / subtotal *
                         100) : discountPercentage) | number:'1.0-0' }}%):</span>
-                    <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
+                    <span class="total-value">{{ formatCurrency(discountAmount) | gujaratiNumber }}</span>
                 </div>
                 <div class="total-column grand-total-column">
                     <span class="total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
-                    <span class="total-value">{{ formatCurrency(grandTotal) }}</span>
+                    <span class="total-value">{{ formatCurrency(grandTotal) | gujaratiNumber }}</span>
                 </div>
             </div>
         </div>

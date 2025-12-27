@@ -31,21 +31,6 @@
                     <label class="form-label">{{ 'PHONE' | translate }}</label>
                     <input type="tel" class="form-control" [(ngModel)]="currentCustomer.phone" name="phone">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">{{ 'EMAIL' | translate }}</label>
-                    <input type="email" class="form-control" [(ngModel)]="currentCustomer.email" name="email">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">{{ 'GST_NUMBER' | translate }}</label>
-                    <input type="text" class="form-control" [(ngModel)]="currentCustomer.gstNumber" name="gstNumber">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">{{ 'ADDRESS' | translate }}</label>
-                <textarea class="form-control" [(ngModel)]="currentCustomer.address" name="address" rows="3"
-                    appGujaratiInput></textarea>
             </div>
 
             <div class="form-actions">
@@ -63,8 +48,6 @@
                     <tr>
                         <th>{{ 'CUSTOMER_NAME' | translate }}</th>
                         <th>{{ 'PHONE' | translate }}</th>
-                        <th>{{ 'EMAIL' | translate }}</th>
-                        <th>{{ 'GST_NUMBER' | translate }}</th>
                         <th>{{ 'ADDED_ON' | translate }}</th>
                         <th>{{ 'ACTIONS' | translate }}</th>
                     </tr>
@@ -73,8 +56,6 @@
                     <tr *ngFor="let customer of customers">
                         <td><strong>{{ customer.name }}</strong></td>
                         <td>{{ customer.phone }}</td>
-                        <td>{{ customer.email || '-' }}</td>
-                        <td>{{ customer.gstNumber || '-' }}</td>
                         <td>{{ formatDate(customer.createdDate) }}</td>
                         <td>
                             <div class="action-buttons">
