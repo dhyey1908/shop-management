@@ -836,3 +836,29 @@ body.font-extra-large table {
 body.font-extra-large .card-title {
   font-size: 2rem;
 }
+/* Consistent Page Container Width for Better Vision */
+.page-container,
+.billing-container,
+.customers-container,
+.products-container,
+.settings-container,
+.invoice-history-container,
+.pending-bills-container,
+.reports-container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 2rem !important;
+}
+
+/* Ensure cards inside containers also respect this width */
+.page-container .card,
+.billing-container .card,
+.customers-container .card,
+.products-container .card,
+.settings-container .card,
+.invoice-history-container .card,
+.pending-bills-container .card,
+.reports-container .card {
+  width: 100% !important;
+  max-width: 100% !important;
+}

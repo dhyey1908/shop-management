@@ -23,7 +23,8 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label">{{ 'PRODUCT_NAME' | translate }} *</label>
-                    <input type="text" class="form-control" [(ngModel)]="currentProduct.name" name="name" required>
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.name" name="name" required
+                        appGujaratiInput>
                 </div>
 
                 <div class="form-group">
@@ -34,7 +35,8 @@
 
                 <div class="form-group">
                     <label class="form-label">{{ 'CATEGORY' | translate }}</label>
-                    <input type="text" class="form-control" [(ngModel)]="currentProduct.category" name="category">
+                    <input type="text" class="form-control" [(ngModel)]="currentProduct.category" name="category"
+                        appGujaratiInput>
                 </div>
             </div>
 

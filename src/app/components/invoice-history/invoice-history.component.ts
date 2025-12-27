@@ -7,11 +7,12 @@ import { Invoice } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
 import { NotificationService } from '../../services/notification.service';
+import { GujaratiInputDirective } from '../../directives/gujarati-input.directive';
 
 @Component({
     selector: 'app-invoice-history',
     standalone: true,
-    imports: [CommonModule, FormsModule, TranslatePipe],
+    imports: [CommonModule, FormsModule, TranslatePipe, GujaratiInputDirective],
     templateUrl: './invoice-history.component.html',
     styleUrl: './invoice-history.component.css'
 })

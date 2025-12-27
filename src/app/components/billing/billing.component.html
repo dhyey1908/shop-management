@@ -134,86 +134,86 @@
     </div>
 </div>
 
-            <!-- Print Receipt Template -->
-            <div class="print-template print-only">
-                <div class="print-invoice" id="printInvoice">
-                    <!-- Header with Shop Name and Mobile -->
-                    <div class="print-header-box">
-                        <div class="shop-title">{{ shopName || 'SHOP NAME HERE' }}</div>
-                        <div class="shop-mobile" *ngIf="shopPhone">{{ shopPhone }}</div>
-                    </div>
+<!-- Print Receipt Template -->
+<div class="print-template print-only">
+    <div class="print-invoice" id="printInvoice">
+        <!-- Header with Shop Name and Mobile -->
+        <div class="print-header-box">
+            <div class="shop-title">{{ shopName || 'SHOP NAME HERE' }}</div>
+            <div class="shop-mobile" *ngIf="shopPhone">{{ shopPhone }}</div>
+        </div>
 
-                    <!-- Customer and Date Row -->
-                    <div class="customer-date-row">
-                        <div class="customer-info">
-                            <span class="label">{{ 'CUSTOMER_NAME' | translate }}:</span>
-                            <span class="value">{{ customerName || 'Walk-in Customer' }}</span>
-                        </div>
-                        <div class="date-info">
-                            <span class="label">{{ 'DATE' | translate }}:</span>
-                            <span class="value">{{ formatDate(date) }}</span>
-                        </div>
-                    </div>
+        <!-- Customer and Date Row -->
+        <div class="customer-date-row">
+            <div class="customer-info">
+                <span class="label">{{ 'CUSTOMER_NAME' | translate }}:</span>
+                <span class="value">{{ customerName || 'Walk-in Customer' }}</span>
+            </div>
+            <div class="date-info">
+                <span class="label">{{ 'DATE' | translate }}:</span>
+                <span class="value">{{ formatDate(date) }}</span>
+            </div>
+        </div>
 
-                    <!-- Items Table with Borders -->
-                    <table class="print-table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="col-sr">{{ 'SR_NO' | translate }}</th>
-                                <th class="col-item">{{ 'ITEM_NAME' | translate }}</th>
-                                <th class="col-qty">{{ 'QUANTITY' | translate }}</th>
-                                <th class="col-price">{{ 'PRICE' | translate }}</th>
-                                <th class="col-total">{{ 'TOTAL' | translate }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let item of items; let i = index">
-                                <tr *ngIf="item.productName">
-                                    <td class="col-sr">{{ i + 1 }}</td>
-                                    <td class="col-item">{{ item.productName }}</td>
-                                    <td class="col-qty">{{ item.quantity }}</td>
-                                    <td class="col-price">{{ item.price }}</td>
-                                    <td class="col-total">{{ formatCurrency(item.total) }}</td>
-                                </tr>
-                            </ng-container>
-                            <!-- Empty rows to maintain structure (minimum 5 rows) -->
-                            <ng-container *ngFor="let emptyRow of getEmptyRows()">
-                                <tr class="empty-row">
-                                    <td class="col-sr">&nbsp;</td>
-                                    <td class="col-item">&nbsp;</td>
-                                    <td class="col-qty">&nbsp;</td>
-                                    <td class="col-price">&nbsp;</td>
-                                    <td class="col-total">&nbsp;</td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
+        <!-- Items Table with Borders -->
+        <table class="print-table-bordered">
+            <thead>
+                <tr>
+                    <th class="col-sr">{{ 'SR_NO' | translate }}</th>
+                    <th class="col-item">{{ 'ITEM_NAME' | translate }}</th>
+                    <th class="col-qty">{{ 'QUANTITY' | translate }}</th>
+                    <th class="col-price">{{ 'PRICE' | translate }}</th>
+                    <th class="col-total">{{ 'TOTAL' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of items; let i = index">
+                    <tr *ngIf="item.productName">
+                        <td class="col-sr">{{ i + 1 }}</td>
+                        <td class="col-item">{{ item.productName }}</td>
+                        <td class="col-qty">{{ item.quantity }}</td>
+                        <td class="col-price">{{ item.price }}</td>
+                        <td class="col-total">{{ formatCurrency(item.total) }}</td>
+                    </tr>
+                </ng-container>
+                <!-- Empty rows to maintain structure (minimum 5 rows) -->
+                <ng-container *ngFor="let emptyRow of getEmptyRows()">
+                    <tr class="empty-row">
+                        <td class="col-sr">&nbsp;</td>
+                        <td class="col-item">&nbsp;</td>
+                        <td class="col-qty">&nbsp;</td>
+                        <td class="col-price">&nbsp;</td>
+                        <td class="col-total">&nbsp;</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
 
-                    <!-- Compact Totals Row -->
-                    <div class="compact-totals-section">
-                        <div class="compact-totals-row">
-                            <div class="total-column">
-                                <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
-                                <span class="total-value">{{ getTotalItemCount() }}</span>
-                            </div>
-                            <div class="total-column">
-                                <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
-                                <span class="total-value">{{ formatCurrency(subtotal) }}</span>
-                            </div>
-                            <div class="total-column" *ngIf="discountAmount > 0">
+        <!-- Compact Totals Row -->
+        <div class="compact-totals-section">
+            <div class="compact-totals-row">
+                <div class="total-column">
+                    <span class="total-label">{{ 'TOTAL_ITEMS' | translate }}:</span>
+                    <span class="total-value">{{ getTotalItemCount() }}</span>
+                </div>
+                <div class="total-column">
+                    <span class="total-label">{{ 'SUBTOTAL' | translate }}:</span>
+                    <span class="total-value">{{ formatCurrency(subtotal) }}</span>
+                </div>
+                <div class="total-column" *ngIf="discountAmount > 0">
                     <span class="total-label">{{ 'DISCOUNT' | translate }} ({{ discountPercentage }}%):</span>
-                                <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
-                            </div>
-                            <div class="total-column grand-total-column">
-                                <span class="total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
-                                <span class="total-value">{{ formatCurrency(grandTotal) }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thank You Message -->
-                    <div class="thank-you-section">
-                        <p>{{ 'VISIT_AGAIN' | translate }}</p>
-                    </div>
+                    <span class="total-value">{{ formatCurrency(discountAmount) }}</span>
+                </div>
+                <div class="total-column grand-total-column">
+                    <span class="total-label">{{ 'GRAND_TOTAL' | translate }}:</span>
+                    <span class="total-value">{{ formatCurrency(grandTotal) }}</span>
                 </div>
             </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div class="thank-you-section">
+            <p>{{ 'VISIT_AGAIN' | translate }}</p>
+        </div>
+    </div>
+</div>

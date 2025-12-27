@@ -8,10 +8,12 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
 import { NotificationService } from '../../services/notification.service';
 
+import { GujaratiInputDirective } from '../../directives/gujarati-input.directive';
+
 @Component({
     selector: 'app-customers',
     standalone: true,
-    imports: [CommonModule, FormsModule, TranslatePipe],
+    imports: [CommonModule, FormsModule, TranslatePipe, GujaratiInputDirective],
     templateUrl: './customers.component.html',
     styleUrl: './customers.component.css'
 })

@@ -4,7 +4,8 @@
     <div class="dropdown-wrapper">
         <div class="search-input-wrapper">
             <input type="text" class="form-control" [placeholder]="placeholder" [(ngModel)]="searchTerm"
-                (input)="onSearchChange()" (focus)="onInputFocus()" (blur)="onInputBlur()" autocomplete="off" />
+                (input)="onSearchChange()" (focus)="onInputFocus()" (blur)="onInputBlur()" autocomplete="off"
+                appGujaratiInput />
             <button *ngIf="selectedValue" type="button" class="clear-btn" (click)="clearSelection()" tabindex="-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor">

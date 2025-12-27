@@ -5,6 +5,7 @@ import { DataService } from '../../services/data.service';
 import { DashboardSummary } from '../../models/models';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { FontSizeService, FontSize } from '../../services/font-size.service';
+import { GujaratiTransliterationService } from '../../services/gujarati-transliteration.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -29,7 +30,8 @@ export class DashboardComponent implements OnInit {
     constructor(
         private dataService: DataService,
         private router: Router,
-        private fontSizeService: FontSizeService
+        private fontSizeService: FontSizeService,
+        public gujaratiService: GujaratiTransliterationService
     ) { }
 
     ngOnInit() {
@@ -47,6 +49,14 @@ export class DashboardComponent implements OnInit {
         this.fontSizeService.currentSize$.subscribe(size => {
             this.currentFontSize = size;
         });
+    }
+
+    toggleGujarati() {
+        this.gujaratiService.toggle(!this.gujaratiService.getEnabled());
+    }
+
+    get isGujaratiEnabled() {
+        return this.gujaratiService.getEnabled();
     }
 
     loadData() {

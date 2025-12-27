@@ -18,6 +18,15 @@
         title="{{ 'FONT_EXTRA_LARGE' | translate }}">
         <span class="font-icon">A+</span>
       </button>
+
+      <div class="divider" style="width: 1px; height: 24px; background: rgba(0,0,0,0.1); margin: 0 10px;"></div>
+
+      <button class="font-size-btn" (click)="toggleGujarati()"
+        [title]="isGujaratiEnabled ? 'Turn OFF Gujarati Typing' : 'Turn ON Gujarati Typing'"
+        [style.background]="isGujaratiEnabled ? 'var(--primary)' : ''" [style.color]="isGujaratiEnabled ? 'white' : ''">
+        <span class="font-icon" style="font-size: 1.1rem; font-weight: bold;">{{ isGujaratiEnabled ? 'ત' : 'En'
+          }}</span>
+      </button>
     </div>
   </header>
 

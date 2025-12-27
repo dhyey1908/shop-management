@@ -8,10 +8,12 @@ export interface DropdownOption {
     subtitle?: string;
 }
 
+import { GujaratiInputDirective } from '../../directives/gujarati-input.directive';
+
 @Component({
     selector: 'app-searchable-dropdown',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, GujaratiInputDirective],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
